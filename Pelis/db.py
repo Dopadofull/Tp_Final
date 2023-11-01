@@ -24,7 +24,7 @@ def close_db(e=None):
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('pelis.sql') as f:
+    with current_app.open_resource('pelicula.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 
@@ -36,4 +36,4 @@ def init_db_command():
 
 def init_app(app):
     app.teardown_appcontext(close_db)
-    app.cli.add_command(init_db_command)   
+    app.cli.add_command(init_db_command)

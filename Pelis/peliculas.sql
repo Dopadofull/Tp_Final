@@ -36,29 +36,29 @@ CREATE TABLE IF NOT EXISTS "film" (
 	"rating"	VARCHAR(10) DEFAULT 'G',
 	"special_features"	VARCHAR(100) DEFAULT NULL,
 	"last_update"	TIMESTAMP NOT NULL,
-	CONSTRAINT "CHECK_special_features" CHECK("special_features" IS null OR "special_features" LIKE '%Trailers%' OR "special_features" LIKE '%Commentaries%' OR "special_features" LIKE '%Deleted Scenes%' OR "special_features" LIKE '%Behind the Scenes%'),
-	CONSTRAINT "CHECK_special_rating" CHECK("rating" IN ('G', 'PG', 'PG-13', 'R', 'NC-17')),
+	PRIMARY KEY("film_id"),
 	CONSTRAINT "fk_film_language" FOREIGN KEY("language_id") REFERENCES "language"("language_id"),
+	CONSTRAINT "CHECK_special_features" CHECK("special_features" IS null OR "special_features" LIKE '%Trailers%' OR "special_features" LIKE '%Commentaries%' OR "special_features" LIKE '%Deleted Scenes%' OR "special_features" LIKE '%Behind the Scenes%'),
 	CONSTRAINT "fk_film_language_original" FOREIGN KEY("original_language_id") REFERENCES "language"("language_id"),
-	PRIMARY KEY("film_id")
+	CONSTRAINT "CHECK_special_rating" CHECK("rating" IN ('G', 'PG', 'PG-13', 'R', 'NC-17'))
 );
 DROP TABLE IF EXISTS "film_actor";
 CREATE TABLE IF NOT EXISTS "film_actor" (
 	"actor_id"	INT NOT NULL,
 	"film_id"	INT NOT NULL,
 	"last_update"	TIMESTAMP NOT NULL,
+	CONSTRAINT "fk_film_actor_film" FOREIGN KEY("film_id") REFERENCES "film"("film_id") ON DELETE NO ACTION ON UPDATE CASCADE,
 	CONSTRAINT "fk_film_actor_actor" FOREIGN KEY("actor_id") REFERENCES "actor"("actor_id") ON DELETE NO ACTION ON UPDATE CASCADE,
-	PRIMARY KEY("actor_id","film_id"),
-	CONSTRAINT "fk_film_actor_film" FOREIGN KEY("film_id") REFERENCES "film"("film_id") ON DELETE NO ACTION ON UPDATE CASCADE
+	PRIMARY KEY("actor_id","film_id")
 );
 DROP TABLE IF EXISTS "film_category";
 CREATE TABLE IF NOT EXISTS "film_category" (
 	"film_id"	INT NOT NULL,
 	"category_id"	SMALLINT NOT NULL,
 	"last_update"	TIMESTAMP NOT NULL,
+	CONSTRAINT "fk_film_category_category" FOREIGN KEY("category_id") REFERENCES "category"("category_id") ON DELETE NO ACTION ON UPDATE CASCADE,
 	CONSTRAINT "fk_film_category_film" FOREIGN KEY("film_id") REFERENCES "film"("film_id") ON DELETE NO ACTION ON UPDATE CASCADE,
-	PRIMARY KEY("film_id","category_id"),
-	CONSTRAINT "fk_film_category_category" FOREIGN KEY("category_id") REFERENCES "category"("category_id") ON DELETE NO ACTION ON UPDATE CASCADE
+	PRIMARY KEY("film_id","category_id")
 );
 INSERT INTO "actor" VALUES (1,'PENELOPE','GUINESS','2020-12-23 07:12:29');
 INSERT INTO "actor" VALUES (2,'NICK','WAHLBERG','2020-12-23 07:12:29');
