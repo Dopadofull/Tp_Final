@@ -3,25 +3,31 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from movies.db import get_db
+from Pelis.db import get_db
 
-bp = Blueprint('pelis', __name__)
+bp = Blueprint('peliculas', __name__,url_prefix="/peliculas/")
 
 @bp.route('/')
 def index():
     db = get_db()
-    pelis = db.execute(
-        """SELECT title AS Pelicula, first_name AS Nombre, last_name AS Apellido
-            FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id
-            JOIN film f ON fa.film_id = f.film_id
-            ORDER BY Pelicula ASC"""
+    peliculas = db.execute(
+        """SELECT f.title AS titulo, f.film_id FROM film f """
     ).fetchall()
-    return render_template('pelis/index.html', pelis=pelis)
+    return render_template('peliculas/index.html', peliculas=peliculas)
 
-def get_pelicula(id):
-    pelicula = get_db().execute(
-        """SELECT *
-            FROM film
-            WHERE film_id = ?,
-            (id,)"""
+
+
+@bp.route('/<int:id>/')
+def detalle(id):
+    db = get_db()
+    pelicula = db.execute(
+        """SELECT f.title AS titulo ,rating as clasificacion, 
+            c.name AS categoria ,length as tiempo, l.name as idioma ,
+              description as descripcion 
+            FROM film f JOIN film_category fc ON f.film_id = fc.film_id  
+            JOIN category c ON c.category_id = fc.category_id 
+            join language l on l.language_id = f.language_id
+            WHERE f.film_id = ?
+        """, (id,)
     ).fetchone()
+    return render_template('peliculas/detalle.html', pelicula=pelicula)

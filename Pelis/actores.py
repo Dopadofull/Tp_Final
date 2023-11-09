@@ -3,25 +3,17 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from movies.db import get_db
+from Pelis.db import get_db
 
-bp = Blueprint('actores', __name__,url_prefix="/actor/")
+bp = Blueprint('actor', __name__,url_prefix="/actor/")
 
 @bp.route('/')
-##hacer sentencia sql para seleccionar actores.
 def index():
     db = get_db()
     actores = db.execute(
-        """SELECT *
-            FROM actor
-            ORDER BY first_name,last_name """
+        """ SELECT f.film_id, f.title FROM film f
+            join film_actor fa on f.film_id = fa.film_id 
+            join actor a on fa.actor_id = a.actor_id
+            WHERE a.actor_id = ?"""
     ).fetchall()
-    return render_template('actores/index.html', actores=actores)
-
-def get_actor(id):
-    actor = get_db().execute(
-        """SELECT *
-            FROM actor
-            WHERE actor_id = ?,
-            (id,)"""
-    ).fetchone()
+    return render_template('actor/index.html', actores = actores)

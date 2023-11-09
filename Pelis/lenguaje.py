@@ -3,24 +3,14 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from movies.db import get_db
+from Pelis.db import get_db
 
-bp = Blueprint('lenguajes', __name__,url_prefix="/lenguaje/")
+bp = Blueprint('language', __name__,url_prefix="/lenguaje/")
 
 @bp.route('/')
 def index():
     db = get_db()
-    lenguaje = db.execute(
-        """SELECT l.name AS lenguaje, f.title AS titulo, release_year AS Año
-           FROM language l JOIN film f ON l.language_id = f.language_id
-           ORDER BY name ASC"""
+    language = db.execute(
+        """SELECT name  FROM language """
     ).fetchall()
-    return render_template('lenguaje/index.html', lenguajes=lenguaje)
-
-def get_pelicula(id):
-    lenguaje = get_db().execute(
-        """SELECT *
-            FROM language
-            WHERE language_id = ?,
-            (id,)"""
-    ).fetchone()
+    return render_template('language/index.html', language= language)

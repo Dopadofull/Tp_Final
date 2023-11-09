@@ -8,7 +8,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'movies.sqlite'),
+        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
 
     if test_config is None:
@@ -25,25 +25,28 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    @app.route('/jiji')
+    def jaja():
+        return 'Hola, Mundo!'
+    
 
     from . import db
     db.init_app(app)
 
-    from . import pelis
-    app.register_blueprint(pelis.bp)
-    app.add_url_rule('/', endpoint='index')
 
-    from . import actores
-    app.register_blueprint(actores.bp)
+    from . import peliculas
+    app.register_blueprint(peliculas.bp)
     
 
-    from . import categoria
-    app.register_blueprint(categoria.bp)
-    
-    from . import lenguaje
-    app.register_blueprint(lenguaje.bp)
+    from . import category
+    app.register_blueprint(category.bp)
 
+
+    from . import language
+    app.register_blueprint(language.bp)
+
+    from . import actor
+    app.register_blueprint(actor.bp)
+   
+ 
     return app

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Detalle{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+
+<h1>titulo: {{ pelicula['titulo'] }} </h1>
+<h1>categoria: {{ pelicula['categoria'] }} </h1>
+<h1>clasificacion: {{ pelicula['clasificacion'] }}</h1>
+<h1>duracion: {{ pelicula['tiempo'] }}</h1>
+<h1>idioma: {{ pelicula['idioma'] }}</h1>
+<p>descripcion: {{ pelicula['descripcion'] }}</p>
+{% endblock %}

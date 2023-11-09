@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+<!doctype html>
+<title>{% block title %}{% endblock %} -Aplicacion</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
-  <h1>Películas</h1>
+  <h1>Aplicacion</h1>
 </nav>
 <section class="content">
-  <header>{% block header %}{% endblock %}</header>
+  <header>
+    {% block header %}{% endblock %}
+  </header>
   {% for message in get_flashed_messages() %}
-  <div class="flash">{{ message }}</div>
-  {% endfor %} {% block content %}{% endblock %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
 </section>
