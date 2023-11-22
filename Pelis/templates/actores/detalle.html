@@ -1,11 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %}Detalle{% endblock %}</h1>
+{% endblock %} {% block content %}
 
-{% block header %}
-  <h1>{% block title %}Detalle{% endblock %}</h1>
-{% endblock %}
-
-{% block content %}
-
-
-<h1>titulo: {{ pelicula['titulo'] }} </h1>
-{% endblock %}
+<h1>Nombre actor: {{ actor['nombre'] }} {{ actor['apellido'] }}</h1>
+{% for peli in peliculas %}
+<article class="post">
+  <header>
+    <div>
+      <h1>
+        <a href="{{url_for('peliculas.detalle', id=peli['film_id'])}}"
+          >{{ peli['pelicula'] }}</a
+        >
+      </h1>
+    </div>
+  </header>
+</article>
+{% endfor %} {% endblock %}

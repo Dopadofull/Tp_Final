@@ -34,19 +34,19 @@ def create_app(test_config=None):
     db.init_app(app)
 
 
-    from . import peliculas
-    app.register_blueprint(peliculas.bp)
+    from . import peluis
+    app.register_blueprint(peluis.bp)
     
 
-    from . import category
-    app.register_blueprint(category.bp)
+    from . import categoria
+    app.register_blueprint(categoria.bp)
 
 
-    from . import language
-    app.register_blueprint(language.bp)
+    from . import lenguaje
+    app.register_blueprint(lenguaje.bp)
 
-    from . import actor
-    app.register_blueprint(actor.bp)
+    from . import actores
+    app.register_blueprint(actores.bp)
    
  
     return app

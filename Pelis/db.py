@@ -24,7 +24,7 @@ def close_db(e=None):
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('baseDatos.sql') as f:
+    with current_app.open_resource('peliculas.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 
@@ -32,7 +32,7 @@ def init_db():
 def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
-    click.echo('Inicio la BaseDeDatos papa')
+    click.echo('Inicio peliculas.py asd')
 
 def init_app(app):
     app.teardown_appcontext(close_db)

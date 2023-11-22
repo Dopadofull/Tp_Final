@@ -13,7 +13,7 @@ def index():
     peliculas = db.execute(
         """SELECT f.title AS titulo, f.film_id FROM film f """
     ).fetchall()
-    return render_template('peliculas/index.html', peliculas=peliculas)
+    return render_template('pelis/index.html', peliculas=peliculas)
 
 
 
