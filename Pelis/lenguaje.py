@@ -5,7 +5,7 @@ from werkzeug.exceptions import abort
 
 from Pelis.db import get_db
 
-bp = Blueprint('language', __name__,url_prefix="/lenguaje/")
+bp = Blueprint('language', __name__,url_prefix="/language/")
 
 @bp.route('/')
 def index():
@@ -13,4 +13,4 @@ def index():
     language = db.execute(
         """SELECT name  FROM language """
     ).fetchall()
-    return render_template('language/index.html', language= language)
+    return render_template('lenguaje/index.html', language= language)

@@ -13,4 +13,4 @@ def index():
     category = db.execute(
         """SELECT c.name AS categorias FROM category c """
     ).fetchall()
-    return render_template('category/index.html', category = category)
+    return render_template('categoria/index.html', category = category)

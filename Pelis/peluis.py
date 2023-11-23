@@ -5,7 +5,7 @@ from werkzeug.exceptions import abort
 
 from Pelis.db import get_db
 
-bp = Blueprint('peliculas', __name__,url_prefix="/peliculas/")
+bp = Blueprint('pelis', __name__,url_prefix="/pelis/")
 
 @bp.route('/')
 def index():
@@ -30,4 +30,12 @@ def detalle(id):
             WHERE f.film_id = ?
         """, (id,)
     ).fetchone()
-    return render_template('peliculas/detalle.html', pelicula=pelicula)
+
+    actores = db.execute( """
+                    select last_name as nombre , first_name as apellido , actor_id from actor
+                        join film_actor USING(actor_id)
+                        where film_id = ?
+            
+                         """, (id,)).fetchall()
+
+    return render_template('pelis/detalle.html', pelicula=pelicula, actores = actores)
